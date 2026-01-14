@@ -52,9 +52,7 @@ function App() {
   };
 
   const cleanHistory = () => {
-    if (isLoading) return;
-    if (messages.length === 0) return;
-    confirm("Tem certeza que deseja limpar o histórico de mensagens?")
+    if (isLoading || messages.length === 0 || !confirm("Tem certeza que deseja limpar o histórico de mensagens?")) return;
     setMessages([]);
   };
 
