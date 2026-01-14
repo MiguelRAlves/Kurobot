@@ -51,6 +51,13 @@ function App() {
     }
   };
 
+  const cleanHistory = () => {
+    if (isLoading) return;
+    if (messages.length === 0) return;
+    confirm("Tem certeza que deseja limpar o histórico de mensagens?")
+    setMessages([]);
+  };
+
   return (
     <div className="flex flex-col h-screen bg-gray-100 font-sans">
       {/* Header */}
@@ -64,8 +71,8 @@ function App() {
         {messages.map((msg, index) => (
           <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[80%] p-3 rounded-2xl shadow-sm ${msg.role === 'user'
-                ? 'bg-blue-600 text-white rounded-tr-none'
-                : 'bg-white text-gray-800 rounded-tl-none border border-gray-200'
+              ? 'bg-blue-600 text-white rounded-tr-none'
+              : 'bg-white text-gray-800 rounded-tl-none border border-gray-200'
               }`}>
               {msg.role === 'user' ? (
                 msg.parts[0].text
@@ -96,11 +103,11 @@ function App() {
       </main>
 
       {/* Input Area */}
-      <footer className="p-4 bg-white border-t border-gray-200">
+      <footer className="p-4 flex bg-white border-t border-gray-200">
         <div className="max-w-4xl mx-auto flex gap-2">
           <input
             type="text"
-            className="flex-1 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            className="flex-1 p-3 min-w-100 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             placeholder="Pergunte qualquer coisa ao Kurobot..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -112,6 +119,14 @@ function App() {
             className="bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 disabled:bg-gray-400 transition-colors shadow-lg"
           >
             Enviar
+          </button>
+        </div>
+        <div className="flex justify-end mt-2">
+          <button
+            onClick={cleanHistory}
+            className="bg-red-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition-colors shadow-lg"
+          >
+            Limpar Histórico
           </button>
         </div>
       </footer>
